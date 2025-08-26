@@ -3,11 +3,46 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>JS Bin</title>
+  <title>Análisis de gastos personales de Octavio Zacagnino</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 40px;
+    }
+    h1 {
+      margin-bottom: 40px;
+    }
+    h2 {
+      margin: 20px 0;
+    }
+    .leyenda {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #555;
+      font-style: italic;
+    }
+    object {
+      width: 80%;
+      height: auto;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+  </style>
 </head>
 <body>
 
+  <!-- 1) Título general de la página -->
+  <h1>Análisis de gastos personales de Octavio Zacagnino</h1>
+
+  <!-- 2) Título específico del gráfico -->
+  <h2>¿En qué gasté durante el mes de julio?</h2>
+
+  <!-- El gráfico incrustado -->
   <object data="julio.svg" type="image/svg+xml"></object>
-  
+
+  <!-- 3) Leyenda debajo -->
+  <div class="leyenda">Hecho con RAWGraphs</div>
+
 </body>
 </html>
