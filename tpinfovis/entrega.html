@@ -46,10 +46,7 @@
       background: #0e1530aa; box-shadow: var(--shadow);
       min-height: 80px; outline:none;
     }
-    .intro:empty:before{
-      content:"Escribí acá una breve introducción (doble click para editar).";
-      color:#98a3c7;
-    }
+    .intro:empty:before{ content:"Escribí acá una breve introducción (doble click para editar)."; color:#98a3c7; }
     .tabs{
       display:flex; gap:10px; flex-wrap:wrap; margin: 8px 0 16px;
       position: sticky; top: 0; z-index: 5; backdrop-filter: blur(6px);
@@ -71,32 +68,27 @@
       margin-bottom: 22px;
     }
     .panel.active{ display:block; }
-    .panel h2{
-      margin: 2px 0 12px; font-size: clamp(18px,2.5vw,24px);
-      font-weight:800; letter-spacing:.3px;
-    }
+    .panel h2{ margin: 2px 0 12px; font-size: clamp(18px,2.5vw,24px); font-weight:800; letter-spacing:.3px; }
     .hint{color:#9fb0da; font-size: 13px; margin: 8px 0 14px}
-    .embed{
-      border-radius: 14px; overflow: hidden; background:#0b122b;
-      border:1px solid #243161;
-    }
-    /* Make SVG/iframe/object responsive */
+    .embed{ border-radius: 14px; overflow: hidden; background:#0b122b; border:1px solid #243161; }
+
+    /* === Ajuste RAWGraphs (SVG) === */
+    .embed.svg-raw{ overflow:hidden; padding:0; }
+    .embed.svg-raw object{ display:block; width:100%; height:auto; border:0; }
+    @media (min-width: 840px){ .embed.svg-raw object{ max-height:72vh; } }
+
+    /* Responsive helpers */
     .ratio { position: relative; width: 100%; padding-top: 62%; }
     .ratio > * { position: absolute; inset:0; width:100%; height:100%; border:0; }
-    /* Allow Datawrapper auto-height to work but still be contained */
     .embed iframe{ width:100%; border:0; }
-    /* Flourish tends to size itself; give it space */
     .flourish-embed{ width:100%; min-height: 420px; }
-    /* Tableau placeholder responsive height */
     .tableauPlaceholder{ width: 100%; height: 75vh; min-height: 540px; }
-    /* Small screens */
+
     @media (max-width: 840px){
       .tableauPlaceholder{ height: 68vh; }
       .ratio { padding-top: 70%; }
     }
-    footer{
-      color:#8fa1cd; text-align:center; margin: 24px 0 40px; font-size: 13px;
-    }
+    footer{ color:#8fa1cd; text-align:center; margin: 24px 0 40px; font-size: 13px; }
   </style>
 </head>
 <body>
@@ -113,26 +105,22 @@
       </nav>
     </header>
 
-     <!-- RAWGRAPHS -->
-  <section class="panel active" id="tab-raw" role="tabpanel" aria-labelledby="btn-raw">
-    <h2>¿En qué “destinos” se me va realmente la plata? <span style="color:#7c9cff">· RAWGraphs</span></h2>
-    <p class="hint">Dejá <code>1tp.svg</code> en la misma carpeta que este HTML. El SVG escalará al ancho del panel.</p>
-    <div class="embed svg-raw">
-      <!-- Si preferís, podés cambiar <object> por <img src="1tp.svg" class="raw-svg"> y también escala perfecto. -->
-      <object data="1tp.svg" type="image/svg+xml"></object>
-    </div>
-  </section>
+    <!-- RAWGRAPHS -->
+    <section class="panel active" id="tab-raw" role="tabpanel" aria-labelledby="btn-raw">
+      <h2>¿En qué “destinos” se me va realmente la plata? <span style="color:#7c9cff">· RAWGraphs</span></h2>
+      <p class="hint">Dejá <code>1tp.svg</code> en la misma carpeta que este HTML. El SVG escalará al ancho del panel.</p>
+      <div class="embed svg-raw">
+        <object data="1tp.svg" type="image/svg+xml"></object>
+      </div>
+    </section>
 
     <!-- FLOURISH -->
     <section class="panel" id="tab-flourish" role="tabpanel" aria-labelledby="btn-flourish">
       <h2>¿Qué categoría lideró mis gastos mes a mes? <span style="color:#6ee7b7">· Flourish</span></h2>
       <div class="embed">
-        <!-- Flourish embed -->
         <div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/25233000">
           <script src="https://public.flourish.studio/resources/embed.js"></script>
-          <noscript>
-            <img src="https://public.flourish.studio/visualisation/25233000/thumbnail" width="100%" alt="bar-chart-race visualization" />
-          </noscript>
+          <noscript><img src="https://public.flourish.studio/visualisation/25233000/thumbnail" width="100%" alt="bar-chart-race visualization" /></noscript>
         </div>
       </div>
     </section>
@@ -141,7 +129,6 @@
     <section class="panel" id="tab-datawrapper" role="tabpanel" aria-labelledby="btn-datawrapper">
       <h2>¿Cuánto gasté por mes jugando al pádel? <span style="color:#f59e0b">· Datawrapper</span></h2>
       <div class="embed">
-        <!-- Datawrapper embed -->
         <iframe title="Cuanto gasté jugando al Pádel por mes?" aria-label="Column Chart" id="datawrapper-chart-v1fgM" src="https://datawrapper.dwcdn.net/v1fgM/3/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="426" data-external="1"></iframe>
         <script type="text/javascript">
           !function(){ "use strict";
@@ -158,19 +145,18 @@
       </div>
     </section>
 
-    <!-- TABLEAU -->
+    <!-- TABLEAU (NUEVO) -->
     <section class="panel" id="tab-tableau" role="tabpanel" aria-labelledby="btn-tableau">
       <h2>¿En qué días y horarios gasto más? <span style="color:#7c9cff">· Tableau</span></h2>
       <div class="embed">
-        <!-- Tableau embed (ajustado a 100% ancho y altura responsive) -->
-        <div class='tableauPlaceholder' id='viz1758404218445' style='position: relative'>
-          <noscript><a href='#'><img alt='Análisis de gastos personales ' src='https://public.tableau.com/static/images/tp/tpinfovis_17584041634440/Anlisisdegastospersonales/1_rss.png' style='border: none' /></a></noscript>
+        <div class='tableauPlaceholder' id='viz1758406928844' style='position: relative'>
+          <noscript><a href='#'><img alt='Análisis de gastos personales ' src='https://public.tableau.com/static/images/ZF/ZFZ39WRJ4/1_rss.png' style='border: none' /></a></noscript>
           <object class='tableauViz' style='display:none;'>
             <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
             <param name='embed_code_version' value='3' />
-            <param name='path' value='views/tpinfovis_17584041634440/Anlisisdegastospersonales?:language=es-ES&amp;:embed=true&amp;publish=yes&amp;:sid=&amp;:redirect=auth' />
+            <param name='path' value='shared/ZFZ39WRJ4' />
             <param name='toolbar' value='yes' />
-            <param name='static_image' value='https://public.tableau.com/static/images/tp/tpinfovis_17584041634440/Anlisisdegastospersonales/1.png' />
+            <param name='static_image' value='https://public.tableau.com/static/images/ZF/ZFZ39WRJ4/1.png' />
             <param name='animate_transition' value='yes' />
             <param name='display_static_image' value='yes' />
             <param name='display_spinner' value='yes' />
@@ -180,12 +166,11 @@
             <param name='filter' value='publish=yes' />
           </object>
         </div>
-        
         <script type='text/javascript'>
           (function(){
-            var divElement = document.getElementById('viz1758404218445');
+            var divElement = document.getElementById('viz1758406928844');
             var vizElement = divElement.getElementsByTagName('object')[0];
-            // Responsive sizes
+            // Responsive: ocupar todo el ancho del panel y una altura visible
             vizElement.style.width = '100%';
             vizElement.style.height = '75vh';
             var scriptElement = document.createElement('script');
@@ -196,9 +181,7 @@
       </div>
     </section>
 
-    <footer>
-      Hecho con ♥ para Infovis — RAWGraphs · Flourish · Datawrapper · Tableau
-    </footer>
+    <footer>Hecho con ♥ para Infovis — RAWGraphs · Flourish · Datawrapper · Tableau</footer>
   </div>
 
   <script>
@@ -214,7 +197,7 @@
         window.scrollTo({top:0, behavior:'smooth'});
       });
     });
-    // Intro: guardá en localStorage
+    // Intro editable persistente
     const intro = document.getElementById('intro');
     const INTRO_KEY = 'infovis_intro_text';
     intro.addEventListener('input', ()=> localStorage.setItem(INTRO_KEY, intro.innerHTML));
