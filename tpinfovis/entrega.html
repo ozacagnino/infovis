@@ -7,111 +7,91 @@
   <style>
     :root{
       --bg: #0b1020;
-      --panel: #121b36cc;
+      --panel: #0f1833;
       --ink: #e8ecf7;
       --ink-dim:#b9c0d4;
       --brand: #7c9cff;
       --brand-2:#6ee7b7;
       --accent:#f59e0b;
       --radius: 18px;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
       --maxw: 1200px;
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
     body{
-      margin:0; color:var(--ink); background:
-        radial-gradient(1200px 600px at 10% -10%, #1a2550 0%, transparent 60%),
-        radial-gradient(900px 500px at 100% 0%, #0e6a69 0%, transparent 60%),
-        linear-gradient(180deg, #0b1020, #0a0f1f 60%, #0b1020);
-      font: 16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
+      margin:0; color:var(--ink);
+      background: radial-gradient(1200px 600px at 10% -10%, #1a2550 0%, transparent 60%),
+                  radial-gradient(900px 500px at 100% 0%, #0e6a69 0%, transparent 60%),
+                  linear-gradient(180deg, #0b1020, #0a0f1f 60%, #0b1020);
+      font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
     }
-    .wrap{max-width:var(--maxw); margin:0 auto; padding:24px; }
-    .hero{ text-align:center; margin: 28px auto 18px; display:grid; gap:16px; }
-    .title{
-      font-size: clamp(28px, 4.8vw, 54px);
-      line-height:1.05; font-weight:800; letter-spacing:.2px; margin:0;
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:24px}
+    header{ text-align:center; margin: 18px auto 22px; }
+    h1{
+      font-size: clamp(28px, 5vw, 56px); margin:0 0 8px;
+      font-weight: 900; letter-spacing:.2px;
       background: linear-gradient(90deg,var(--brand), var(--brand-2) 60%, #fff);
       -webkit-background-clip:text; background-clip:text; color: transparent;
     }
-    .subtitle{color:var(--ink-dim); margin:0 auto; max-width:860px; font-size:clamp(14px,1.8vw,18px)}
+    .subtitle{ color:var(--ink-dim); margin:0 auto; max-width:860px }
     .intro{
       margin:22px auto 28px; max-width:920px; padding:16px 18px;
-      border:1px dashed #3a4a7e; border-radius: var(--radius);
-      background: #0e1530aa; box-shadow: var(--shadow);
-      min-height: 80px; outline:none;
+      border:1px dashed #3a4a7e; border-radius: 14px;
+      background: #0e1530aa; min-height: 80px; outline:none;
     }
     .intro:empty:before{ content:"Escribí acá una breve introducción (doble click para editar)."; color:#98a3c7; }
-    .tabs{
-      display:flex; gap:10px; flex-wrap:wrap; margin: 8px 0 16px;
-      position: sticky; top: 0; z-index: 5; backdrop-filter: blur(6px);
+    .nav{
+      display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin: 10px 0 24px;
     }
-    .tab-btn{
-      appearance:none; border:1px solid #2a376a; color: var(--ink);
+    .nav a{
+      text-decoration:none; color:var(--ink); border:1px solid #2a376a; padding:8px 12px; border-radius:999px;
       background: linear-gradient(180deg,#18234b,#121a38);
-      padding:10px 14px; border-radius: 999px; cursor:pointer;
-      font-weight:600; letter-spacing:.2px; transition: all .18s ease;
+      font-weight:600;
     }
-    .tab-btn:hover{ transform: translateY(-1px); border-color:#41539c }
-    .tab-btn[aria-selected="true"]{
-      background: linear-gradient(180deg,#2943a0,#1b2f78);
-      border-color: #5f7df5; box-shadow: 0 6px 20px rgba(120,150,255,.25), inset 0 0 0 1px #7c9cff;
+    .viz-card{
+      background: var(--panel); border:1px solid #243161; border-radius: 16px;
+      padding: 14px; margin: 18px 0 28px; box-shadow: 0 10px 30px rgba(0,0,0,.25);
     }
-    .panel{
-      display:none; background: var(--panel); border:1px solid #243161;
-      border-radius: var(--radius); padding:16px; box-shadow: var(--shadow);
-      margin-bottom: 22px;
-    }
-    .panel.active{ display:block; }
-    .panel h2{ margin: 2px 0 12px; font-size: clamp(18px,2.5vw,24px); font-weight:800; letter-spacing:.3px; }
-    .hint{color:#9fb0da; font-size: 13px; margin: 8px 0 14px}
+    .viz-card h2{ margin: 4px 6px 12px; font-size: clamp(18px,2.5vw,26px) }
     .embed{ border-radius: 14px; overflow: hidden; background:#0b122b; border:1px solid #243161; }
 
-    /* RAWGraphs encajado */
-    .embed.svg-raw{ overflow:hidden; padding:0; }
-    .embed.svg-raw object{ display:block; width:100%; height:auto; border:0; }
-    @media (min-width: 840px){ .embed.svg-raw object{ max-height:72vh; } }
-
-    /* Helpers */
-    .ratio { position: relative; width: 100%; padding-top: 62%; }
-    .ratio > * { position: absolute; inset:0; width:100%; height:100%; border:0; }
-    .embed iframe{ width:100%; border:0; }
-    .flourish-embed{ width:100%; min-height: 420px; }
-    /* Tableau: sin altura fija; la setea JS para que entre en pantalla */
-    .tableauPlaceholder{ width:100%; min-height: 420px; }
-
-    @media (max-width: 840px){
-      .ratio { padding-top: 70%; }
-    }
-    footer{ color:#8fa1cd; text-align:center; margin: 24px 0 40px; font-size: 13px; }
+    /* No tocamos los tamaños internos de los iframes/objects; solo les damos ancho fluido */
+    .embed > *{ width:100%; display:block; border:0; }
+    .flourish-embed{ width:100%; }
+    /* Datawrapper ya autogestiona la altura con su script */
+    /* Tableau: dejamos tu script tal cual */
+    footer{ color:#8fa1cd; text-align:center; margin: 20px 0 40px; font-size: 13px; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <header class="hero">
-      <h1 class="title">Mi año en gastos — historia visual interactiva</h1>
-      <p class="subtitle">Cuatro visualizaciones para entender en qué, cuándo y cómo se movió mi plata.</p>
-      <div id="intro" class="intro" contenteditable="true"></div>
-      <nav class="tabs" role="tablist" aria-label="Visualizaciones">
-        <button class="tab-btn" role="tab" aria-selected="true" aria-controls="tab-raw" id="btn-raw">RAWGraphs</button>
-        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-flourish" id="btn-flourish">Flourish</button>
-        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-datawrapper" id="btn-datawrapper">Datawrapper</button>
-        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-tableau" id="btn-tableau">Tableau</button>
-      </nav>
+    <header>
+      <h1>Mi año en gastos — historia visual interactiva</h1>
+      <p class="subtitle">Cuatro visualizaciones para entender en qué, cuándo y cómo se movió mi plata. Deslizá y explorá.</p>
     </header>
 
+    <div id="intro" class="intro" contenteditable="true"></div>
+
+    <nav class="nav">
+      <a href="#rawgraphs">RAWGraphs</a>
+      <a href="#flourish">Flourish</a>
+      <a href="#datawrapper">Datawrapper</a>
+      <a href="#tableau">Tableau</a>
+    </nav>
+
     <!-- RAWGRAPHS -->
-    <section class="panel active" id="tab-raw" role="tabpanel" aria-labelledby="btn-raw">
-      <h2>¿En qué “destinos” se me va realmente la plata? <span style="color:#7c9cff">· RAWGraphs</span></h2>
-      <div class="embed svg-raw">
+    <section id="rawgraphs" class="viz-card">
+      <h2>¿En qué “destinos” se me va realmente la plata? · <span style="color:#7c9cff">RAWGraphs</span></h2>
+      <div class="embed">
+        <!-- TAL CUAL ME LO PASASTE -->
         <object data="1tp.svg" type="image/svg+xml"></object>
       </div>
     </section>
 
     <!-- FLOURISH -->
-    <section class="panel" id="tab-flourish" role="tabpanel" aria-labelledby="btn-flourish">
-      <h2>¿Qué categoría lideró mis gastos mes a mes? <span style="color:#6ee7b7">· Flourish</span></h2>
+    <section id="flourish" class="viz-card">
+      <h2>¿Qué categoría lideró mis gastos mes a mes? · <span style="color:#6ee7b7">Flourish</span></h2>
       <div class="embed">
+        <!-- TAL CUAL ME LO PASASTE -->
         <div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/25233000">
           <script src="https://public.flourish.studio/resources/embed.js"></script>
           <noscript><img src="https://public.flourish.studio/visualisation/25233000/thumbnail" width="100%" alt="bar-chart-race visualization" /></noscript>
@@ -120,32 +100,23 @@
     </section>
 
     <!-- DATAWRAPPER -->
-    <section class="panel" id="tab-datawrapper" role="tabpanel" aria-labelledby="btn-datawrapper">
-      <h2>¿Cuánto gasté por mes jugando al pádel? <span style="color:#f59e0b">· Datawrapper</span></h2>
+    <section id="datawrapper" class="viz-card">
+      <h2>¿Cuánto gasté por mes jugando al pádel? · <span style="color:#f59e0b">Datawrapper</span></h2>
       <div class="embed">
+        <!-- TAL CUAL ME LO PASASTE -->
         <iframe title="Cuanto gasté jugando al Pádel por mes?" aria-label="Column Chart" id="datawrapper-chart-v1fgM" src="https://datawrapper.dwcdn.net/v1fgM/3/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="426" data-external="1"></iframe>
-        <script type="text/javascript">
-          !function(){ "use strict";
-            window.addEventListener("message", function(a){
-              if(void 0!==a.data["datawrapper-height"]){
-                var e=document.querySelectorAll("iframe");
-                for(var t in a.data["datawrapper-height"]) for(var r,i=0; r=e[i]; i++){
-                  if(r.contentWindow===a.source){ r.style.height = a.data["datawrapper-height"][t]+"px"; }
-                }
-              }
-            });
-          }();
-        </script> 
+        <script type="text/javascript">!function(){"use strict";window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}})}();</script>
       </div>
     </section>
 
-    <!-- TABLEAU (NUEVO, auto-fit en pantalla) -->
-    <section class="panel" id="tab-tableau" role="tabpanel" aria-labelledby="btn-tableau">
-      <h2>¿En qué días y horarios gasto más? <span style="color:#7c9cff">· Tableau</span></h2>
+    <!-- TABLEAU -->
+    <section id="tableau" class="viz-card">
+      <h2>¿En qué días y horarios gasto más? · <span style="color:#7c9cff">Tableau</span></h2>
       <div class="embed">
+        <!-- TAL CUAL ME LO PASASTE -->
         <div class='tableauPlaceholder' id='viz1758406928844' style='position: relative'>
           <noscript><a href='#'><img alt='Análisis de gastos personales ' src='https://public.tableau.com/static/images/ZF/ZFZ39WRJ4/1_rss.png' style='border: none' /></a></noscript>
-          <object class='tableauViz' style='display:none;'>
+          <object class='tableauViz'  style='display:none;'>
             <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
             <param name='embed_code_version' value='3' />
             <param name='path' value='shared/ZFZ39WRJ4' />
@@ -161,15 +132,12 @@
           </object>
         </div>
         <script type='text/javascript'>
-          (function(){
-            var divElement = document.getElementById('viz1758406928844');
-            var vizElement = divElement.getElementsByTagName('object')[0];
-            vizElement.style.width = '100%'; // ancho pleno
-            // la altura la setea fitTableau() para que no haya scroll
-            var scriptElement = document.createElement('script');
-            scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-            vizElement.parentNode.insertBefore(scriptElement, vizElement);
-          })();
+          var divElement = document.getElementById('viz1758406928844');
+          var vizElement = divElement.getElementsByTagName('object')[0];
+          vizElement.style.width='1016px';vizElement.style.height='991px';
+          var scriptElement = document.createElement('script');
+          scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+          vizElement.parentNode.insertBefore(scriptElement, vizElement);
         </script>
       </div>
     </section>
@@ -178,47 +146,11 @@
   </div>
 
   <script>
-    // Tabs
-    const tabs = [...document.querySelectorAll('.tab-btn')];
-    const panels = [...document.querySelectorAll('.panel')];
-    tabs.forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        tabs.forEach(b=>b.setAttribute('aria-selected','false'));
-        panels.forEach(p=>p.classList.remove('active'));
-        btn.setAttribute('aria-selected','true');
-        const panelId = btn.getAttribute('aria-controls');
-        document.getElementById(panelId).classList.add('active');
-        window.scrollTo({top:0, behavior:'smooth'});
-        if(panelId === 'tab-tableau') fitTableau(); // ajustar al entrar
-      });
-    });
-
-    // Intro editable persistente
+    // Guardá la intro localmente (editable)
     const intro = document.getElementById('intro');
     const INTRO_KEY = 'infovis_intro_text';
     intro.addEventListener('input', ()=> localStorage.setItem(INTRO_KEY, intro.innerHTML));
-    const saved = localStorage.getItem(INTRO_KEY);
-    if(saved) intro.innerHTML = saved;
-
-    // === Ajuste de altura para que Tableau entre entero sin scroll ===
-    function fitTableau(){
-    const placeholder = document.getElementById('viz1758406928844');
-    if(!placeholder) return;
-
-    // distancia desde el top del viewport hasta el comienzo del viz
-    const rect = placeholder.getBoundingClientRect();
-    // altura disponible hasta el bottom del viewport (le dejo un pequeño margen)
-    const available = Math.max(420, window.innerHeight - rect.top - 8);
-
-    // seteo altura tanto al placeholder como al <object> que usa Tableau internamente
-    placeholder.style.height = available + 'px';
-    const obj = placeholder.getElementsByTagName('object')[0];
-    if (obj) obj.style.height = available + 'px';
-  }
-
-  // ya estaban estas llamadas: mantenelas
-  window.addEventListener('load', fitTableau);
-  window.addEventListener('resize', fitTableau);
+    const saved = localStorage.getItem(INTRO_KEY); if(saved) intro.innerHTML = saved;
   </script>
 </body>
 </html>
