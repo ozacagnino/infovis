@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mi año en gastos — Historia visual interactiva</title>
+  <style>
+    :root{
+      --bg: #0b1020;
+      --panel: #121b36cc;
+      --ink: #e8ecf7;
+      --ink-dim:#b9c0d4;
+      --brand: #7c9cff;
+      --brand-2:#6ee7b7;
+      --accent:#f59e0b;
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --maxw: 1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--ink); background:
+        radial-gradient(1200px 600px at 10% -10%, #1a2550 0%, transparent 60%),
+        radial-gradient(900px 500px at 100% 0%, #0e6a69 0%, transparent 60%),
+        linear-gradient(180deg, #0b1020, #0a0f1f 60%, #0b1020);
+      font: 16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
+    }
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:24px; }
+    .hero{
+      text-align:center; margin: 28px auto 18px;
+      display:grid; gap:16px;
+    }
+    .title{
+      font-size: clamp(28px, 4.8vw, 54px);
+      line-height:1.05; font-weight:800; letter-spacing:.2px;
+      margin:0; 
+      background: linear-gradient(90deg,var(--brand), var(--brand-2) 60%, #fff);
+      -webkit-background-clip:text; background-clip:text; color: transparent;
+      text-shadow: 0 0 0 rgba(0,0,0,0.2);
+    }
+    .subtitle{color:var(--ink-dim); margin:0 auto; max-width:860px; font-size:clamp(14px,1.8vw,18px)}
+    .intro{
+      margin:22px auto 28px; max-width:920px; padding:16px 18px;
+      border:1px dashed #3a4a7e; border-radius: var(--radius);
+      background: #0e1530aa; box-shadow: var(--shadow);
+      min-height: 80px; outline:none;
+    }
+    .intro:empty:before{
+      content:"Escribí acá una breve introducción (doble click para editar).";
+      color:#98a3c7;
+    }
+    .tabs{
+      display:flex; gap:10px; flex-wrap:wrap; margin: 8px 0 16px;
+      position: sticky; top: 0; z-index: 5; backdrop-filter: blur(6px);
+    }
+    .tab-btn{
+      appearance:none; border:1px solid #2a376a; color: var(--ink);
+      background: linear-gradient(180deg,#18234b,#121a38);
+      padding:10px 14px; border-radius: 999px; cursor:pointer;
+      font-weight:600; letter-spacing:.2px; transition: all .18s ease;
+    }
+    .tab-btn:hover{ transform: translateY(-1px); border-color:#41539c }
+    .tab-btn[aria-selected="true"]{
+      background: linear-gradient(180deg,#2943a0,#1b2f78);
+      border-color: #5f7df5; box-shadow: 0 6px 20px rgba(120,150,255,.25), inset 0 0 0 1px #7c9cff;
+    }
+    .panel{
+      display:none; background: var(--panel); border:1px solid #243161;
+      border-radius: var(--radius); padding:16px; box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+    .panel.active{ display:block; }
+    .panel h2{
+      margin: 2px 0 12px; font-size: clamp(18px,2.5vw,24px);
+      font-weight:800; letter-spacing:.3px;
+    }
+    .hint{color:#9fb0da; font-size: 13px; margin: 8px 0 14px}
+    .embed{
+      border-radius: 14px; overflow: hidden; background:#0b122b;
+      border:1px solid #243161;
+    }
+    /* Make SVG/iframe/object responsive */
+    .ratio { position: relative; width: 100%; padding-top: 62%; }
+    .ratio > * { position: absolute; inset:0; width:100%; height:100%; border:0; }
+    /* Allow Datawrapper auto-height to work but still be contained */
+    .embed iframe{ width:100%; border:0; }
+    /* Flourish tends to size itself; give it space */
+    .flourish-embed{ width:100%; min-height: 420px; }
+    /* Tableau placeholder responsive height */
+    .tableauPlaceholder{ width: 100%; height: 75vh; min-height: 540px; }
+    /* Small screens */
+    @media (max-width: 840px){
+      .tableauPlaceholder{ height: 68vh; }
+      .ratio { padding-top: 70%; }
+    }
+    footer{
+      color:#8fa1cd; text-align:center; margin: 24px 0 40px; font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <h1 class="title">Mi año en gastos — historia visual interactiva</h1>
+      <p class="subtitle">Cuatro visualizaciones para entender en qué, cuándo y cómo se movió mi plata. Navegá por las pestañas, explorá y contá tu historia.</p>
+      <div id="intro" class="intro" contenteditable="true"></div>
+      <nav class="tabs" role="tablist" aria-label="Visualizaciones">
+        <button class="tab-btn" role="tab" aria-selected="true" aria-controls="tab-raw" id="btn-raw">RAWGraphs</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-flourish" id="btn-flourish">Flourish</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-datawrapper" id="btn-datawrapper">Datawrapper</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-tableau" id="btn-tableau">Tableau</button>
+      </nav>
+    </header>
+
+    <!-- RAWGRAPHS -->
+    <section class="panel active" id="tab-raw" role="tabpanel" aria-labelledby="btn-raw">
+      <h2>¿En qué “destinos” se me va realmente la plata? <span style="color:#7c9cff">· RAWGraphs</span></h2>
+      <p class="hint">Asegurate de tener <code>1tp.svg</code> en la misma carpeta que este HTML. El SVG es escalable y conserva tooltips/etiquetas si los exportaste.</p>
+      <div class="embed ratio">
+        <!-- RAWGRAPHS embed -->
+        <object data="1tp.svg" type="image/svg+xml"></object>
+      </div>
+    </section>
+
+    <!-- FLOURISH -->
+    <section class="panel" id="tab-flourish" role="tabpanel" aria-labelledby="btn-flourish">
+      <h2>¿Qué categoría lideró mis gastos mes a mes? <span style="color:#6ee7b7">· Flourish</span></h2>
+      <div class="embed">
+        <!-- Flourish embed -->
+        <div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/25233000">
+          <script src="https://public.flourish.studio/resources/embed.js"></script>
+          <noscript>
+            <img src="https://public.flourish.studio/visualisation/25233000/thumbnail" width="100%" alt="bar-chart-race visualization" />
+          </noscript>
+        </div>
+      </div>
+    </section>
+
+    <!-- DATAWRAPPER -->
+    <section class="panel" id="tab-datawrapper" role="tabpanel" aria-labelledby="btn-datawrapper">
+      <h2>¿Cuánto gasté por mes jugando al pádel? <span style="color:#f59e0b">· Datawrapper</span></h2>
+      <div class="embed">
+        <!-- Datawrapper embed -->
+        <iframe title="Cuanto gasté jugando al Pádel por mes?" aria-label="Column Chart" id="datawrapper-chart-v1fgM" src="https://datawrapper.dwcdn.net/v1fgM/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="426" data-external="1"></iframe>
+        <script type="text/javascript">
+          !function(){ "use strict";
+            window.addEventListener("message", function(a){
+              if(void 0!==a.data["datawrapper-height"]){
+                var e=document.querySelectorAll("iframe");
+                for(var t in a.data["datawrapper-height"]) for(var r,i=0; r=e[i]; i++){
+                  if(r.contentWindow===a.source){ r.style.height = a.data["datawrapper-height"][t]+"px"; }
+                }
+              }
+            });
+          }();
+        </script>
+      </div>
+    </section>
+
+    <!-- TABLEAU -->
+    <section class="panel" id="tab-tableau" role="tabpanel" aria-labelledby="btn-tableau">
+      <h2>¿En qué días y horarios gasto más? <span style="color:#7c9cff">· Tableau</span></h2>
+      <div class="embed">
+        <!-- Tableau embed (ajustado a 100% ancho y altura responsive) -->
+        <div class='tableauPlaceholder' id='viz1758404218445' style='position: relative'>
+          <noscript><a href='#'><img alt='Análisis de gastos personales ' src='https://public.tableau.com/static/images/tp/tpinfovis_17584041634440/Anlisisdegastospersonales/1_rss.png' style='border: none' /></a></noscript>
+          <object class='tableauViz' style='display:none;'>
+            <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+            <param name='embed_code_version' value='3' />
+            <param name='path' value='views/tpinfovis_17584041634440/Anlisisdegastospersonales?:language=es-ES&amp;:embed=true&amp;publish=yes&amp;:sid=&amp;:redirect=auth' />
+            <param name='toolbar' value='yes' />
+            <param name='static_image' value='https://public.tableau.com/static/images/tp/tpinfovis_17584041634440/Anlisisdegastospersonales/1.png' />
+            <param name='animate_transition' value='yes' />
+            <param name='display_static_image' value='yes' />
+            <param name='display_spinner' value='yes' />
+            <param name='display_overlay' value='yes' />
+            <param name='display_count' value='yes' />
+            <param name='language' value='es-ES' />
+            <param name='filter' value='publish=yes' />
+          </object>
+        </div>
+        <script type='text/javascript'>
+          (function(){
+            var divElement = document.getElementById('viz1758404218445');
+            var vizElement = divElement.getElementsByTagName('object')[0];
+            // Responsive sizes
+            vizElement.style.width = '100%';
+            vizElement.style.height = '75vh';
+            var scriptElement = document.createElement('script');
+            scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+            vizElement.parentNode.insertBefore(scriptElement, vizElement);
+          })();
+        </script>
+      </div>
+    </section>
+
+    <footer>
+      Hecho con ♥ para Infovis — RAWGraphs · Flourish · Datawrapper · Tableau
+    </footer>
+  </div>
+
+  <script>
+    // Tabs
+    const tabs = [...document.querySelectorAll('.tab-btn')];
+    const panels = [...document.querySelectorAll('.panel')];
+    tabs.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        tabs.forEach(b=>b.setAttribute('aria-selected','false'));
+        panels.forEach(p=>p.classList.remove('active'));
+        btn.setAttribute('aria-selected','true');
+        document.getElementById(btn.getAttribute('aria-controls')).classList.add('active');
+        window.scrollTo({top:0, behavior:'smooth'});
+      });
+    });
+    // Intro: guardá en localStorage
+    const intro = document.getElementById('intro');
+    const INTRO_KEY = 'infovis_intro_text';
+    intro.addEventListener('input', ()=> localStorage.setItem(INTRO_KEY, intro.innerHTML));
+    const saved = localStorage.getItem(INTRO_KEY);
+    if(saved) intro.innerHTML = saved;
+  </script>
+</body>
+</html>
