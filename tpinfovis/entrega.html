@@ -27,17 +27,12 @@
       font: 16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
     }
     .wrap{max-width:var(--maxw); margin:0 auto; padding:24px; }
-    .hero{
-      text-align:center; margin: 28px auto 18px;
-      display:grid; gap:16px;
-    }
+    .hero{ text-align:center; margin: 28px auto 18px; display:grid; gap:16px; }
     .title{
       font-size: clamp(28px, 4.8vw, 54px);
-      line-height:1.05; font-weight:800; letter-spacing:.2px;
-      margin:0; 
+      line-height:1.05; font-weight:800; letter-spacing:.2px; margin:0;
       background: linear-gradient(90deg,var(--brand), var(--brand-2) 60%, #fff);
       -webkit-background-clip:text; background-clip:text; color: transparent;
-      text-shadow: 0 0 0 rgba(0,0,0,0.2);
     }
     .subtitle{color:var(--ink-dim); margin:0 auto; max-width:860px; font-size:clamp(14px,1.8vw,18px)}
     .intro{
@@ -72,20 +67,20 @@
     .hint{color:#9fb0da; font-size: 13px; margin: 8px 0 14px}
     .embed{ border-radius: 14px; overflow: hidden; background:#0b122b; border:1px solid #243161; }
 
-    /* === Ajuste RAWGraphs (SVG) === */
+    /* RAWGraphs encajado */
     .embed.svg-raw{ overflow:hidden; padding:0; }
     .embed.svg-raw object{ display:block; width:100%; height:auto; border:0; }
     @media (min-width: 840px){ .embed.svg-raw object{ max-height:72vh; } }
 
-    /* Responsive helpers */
+    /* Helpers */
     .ratio { position: relative; width: 100%; padding-top: 62%; }
     .ratio > * { position: absolute; inset:0; width:100%; height:100%; border:0; }
     .embed iframe{ width:100%; border:0; }
     .flourish-embed{ width:100%; min-height: 420px; }
-    .tableauPlaceholder{ width: 100%; height: 75vh; min-height: 540px; }
+    /* Tableau: sin altura fija; la setea JS para que entre en pantalla */
+    .tableauPlaceholder{ width:100%; min-height: 420px; }
 
     @media (max-width: 840px){
-      .tableauPlaceholder{ height: 68vh; }
       .ratio { padding-top: 70%; }
     }
     footer{ color:#8fa1cd; text-align:center; margin: 24px 0 40px; font-size: 13px; }
@@ -145,64 +140,9 @@
       </div>
     </section>
 
-    <!-- TABLEAU (NUEVO) -->
+    <!-- TABLEAU (NUEVO, auto-fit en pantalla) -->
     <section class="panel" id="tab-tableau" role="tabpanel" aria-labelledby="btn-tableau">
       <h2>¿En qué días y horarios gasto más? <span style="color:#7c9cff">· Tableau</span></h2>
       <div class="embed">
         <div class='tableauPlaceholder' id='viz1758406928844' style='position: relative'>
-          <noscript><a href='#'><img alt='Análisis de gastos personales ' src='https://public.tableau.com/static/images/ZF/ZFZ39WRJ4/1_rss.png' style='border: none' /></a></noscript>
-          <object class='tableauViz' style='display:none;'>
-            <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
-            <param name='embed_code_version' value='3' />
-            <param name='path' value='shared/ZFZ39WRJ4' />
-            <param name='toolbar' value='yes' />
-            <param name='static_image' value='https://public.tableau.com/static/images/ZF/ZFZ39WRJ4/1.png' />
-            <param name='animate_transition' value='yes' />
-            <param name='display_static_image' value='yes' />
-            <param name='display_spinner' value='yes' />
-            <param name='display_overlay' value='yes' />
-            <param name='display_count' value='yes' />
-            <param name='language' value='es-ES' />
-            <param name='filter' value='publish=yes' />
-          </object>
-        </div>
-        <script type='text/javascript'>
-          (function(){
-            var divElement = document.getElementById('viz1758406928844');
-            var vizElement = divElement.getElementsByTagName('object')[0];
-            // Responsive: ocupar todo el ancho del panel y una altura visible
-            vizElement.style.width = '100%';
-            vizElement.style.height = '75vh';
-            var scriptElement = document.createElement('script');
-            scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-            vizElement.parentNode.insertBefore(scriptElement, vizElement);
-          })();
-        </script>
-      </div>
-    </section>
-
-    <footer>Hecho con ♥ para Infovis — RAWGraphs · Flourish · Datawrapper · Tableau</footer>
-  </div>
-
-  <script>
-    // Tabs
-    const tabs = [...document.querySelectorAll('.tab-btn')];
-    const panels = [...document.querySelectorAll('.panel')];
-    tabs.forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        tabs.forEach(b=>b.setAttribute('aria-selected','false'));
-        panels.forEach(p=>p.classList.remove('active'));
-        btn.setAttribute('aria-selected','true');
-        document.getElementById(btn.getAttribute('aria-controls')).classList.add('active');
-        window.scrollTo({top:0, behavior:'smooth'});
-      });
-    });
-    // Intro editable persistente
-    const intro = document.getElementById('intro');
-    const INTRO_KEY = 'infovis_intro_text';
-    intro.addEventListener('input', ()=> localStorage.setItem(INTRO_KEY, intro.innerHTML));
-    const saved = localStorage.getItem(INTRO_KEY);
-    if(saved) intro.innerHTML = saved;
-  </script>
-</body>
-</html>
+          <noscript><a href='#'><img alt='Análisis de gastos personales ' src='https://public.tableau.com/static/images/ZF/ZFZ39WRJ4/1_rss.png' style_
