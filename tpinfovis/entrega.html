@@ -202,20 +202,23 @@
 
     // === Ajuste de altura para que Tableau entre entero sin scroll ===
     function fitTableau(){
-      const hero = document.querySelector('.hero');
-      const tabsBar = document.querySelector('.tabs');
-      const panel = document.getElementById('tab-tableau');
-      const title = panel.querySelector('h2');
-      const placeholder = document.getElementById('viz1758406928844');
-      const obj = placeholder ? placeholder.getElementsByTagName('object')[0] : null;
-      if(!obj) return;
-      // espacio disponible en viewport menos header + tabs + título + márgenes internos
-      const used = (hero?.offsetHeight||0) + (tabsBar?.offsetHeight||0) + (title?.offsetHeight||0) + 48 /*padding/márgenes*/;
-      const target = Math.max(420, window.innerHeight - used);
-      obj.style.height = target + 'px';
-    }
-    window.addEventListener('load', fitTableau);
-    window.addEventListener('resize', fitTableau);
+    const placeholder = document.getElementById('viz1758406928844');
+    if(!placeholder) return;
+
+    // distancia desde el top del viewport hasta el comienzo del viz
+    const rect = placeholder.getBoundingClientRect();
+    // altura disponible hasta el bottom del viewport (le dejo un pequeño margen)
+    const available = Math.max(420, window.innerHeight - rect.top - 8);
+
+    // seteo altura tanto al placeholder como al <object> que usa Tableau internamente
+    placeholder.style.height = available + 'px';
+    const obj = placeholder.getElementsByTagName('object')[0];
+    if (obj) obj.style.height = available + 'px';
+  }
+
+  // ya estaban estas llamadas: mantenelas
+  window.addEventListener('load', fitTableau);
+  window.addEventListener('resize', fitTableau);
   </script>
 </body>
 </html>
