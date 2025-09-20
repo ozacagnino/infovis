@@ -35,10 +35,9 @@
     .subtitle{ color:var(--ink-dim); margin:0 auto; max-width:860px }
     .intro{
       margin:22px auto 28px; max-width:920px; padding:16px 18px;
-      border:1px dashed #3a4a7e; border-radius: 14px;
-      background: #0e1530aa; min-height: 80px; outline:none;
+      border:1px solid #243161; border-radius: 14px;
+      background: #0e1530aa;
     }
-    .intro:empty:before{ content:"Escribí acá una breve introducción (doble click para editar)."; color:#98a3c7; }
     .nav{
       display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin: 10px 0 24px;
     }
@@ -54,11 +53,10 @@
     .viz-card h2{ margin: 4px 6px 12px; font-size: clamp(18px,2.5vw,26px) }
     .embed{ border-radius: 14px; overflow: hidden; background:#0b122b; border:1px solid #243161; }
 
-    /* No tocamos los tamaños internos de los iframes/objects; solo les damos ancho fluido */
+    /* Ancho fluido para todos los embeds */
     .embed > *{ width:100%; display:block; border:0; }
     .flourish-embed{ width:100%; }
-    /* Datawrapper ya autogestiona la altura con su script */
-    /* Tableau: dejamos tu script tal cual */
+
     footer{ color:#8fa1cd; text-align:center; margin: 20px 0 40px; font-size: 13px; }
   </style>
 </head>
@@ -69,7 +67,11 @@
       <p class="subtitle">Cuatro visualizaciones para entender en qué, cuándo y cómo se movió mi plata. Deslizá y explorá.</p>
     </header>
 
-    <div id="intro" class="intro" contenteditable="true"></div>
+    <!-- Descripción fija (editá este texto en el HTML si querés cambiarlo) -->
+    <div class="intro">
+      Esta página resume mis gastos personales del último año con cuatro visualizaciones interactivas.
+      Mirá la distribución por categorías, la evolución mensual del pádel y los patrones por días y horarios.
+    </div>
 
     <nav class="nav">
       <a href="#rawgraphs">RAWGraphs</a>
@@ -82,7 +84,6 @@
     <section id="rawgraphs" class="viz-card">
       <h2>¿En qué “destinos” se me va realmente la plata? · <span style="color:#7c9cff">RAWGraphs</span></h2>
       <div class="embed">
-        <!-- TAL CUAL ME LO PASASTE -->
         <object data="1tp.svg" type="image/svg+xml"></object>
       </div>
     </section>
@@ -91,7 +92,6 @@
     <section id="flourish" class="viz-card">
       <h2>¿Qué categoría lideró mis gastos mes a mes? · <span style="color:#6ee7b7">Flourish</span></h2>
       <div class="embed">
-        <!-- TAL CUAL ME LO PASASTE -->
         <div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/25233000">
           <script src="https://public.flourish.studio/resources/embed.js"></script>
           <noscript><img src="https://public.flourish.studio/visualisation/25233000/thumbnail" width="100%" alt="bar-chart-race visualization" /></noscript>
@@ -103,7 +103,6 @@
     <section id="datawrapper" class="viz-card">
       <h2>¿Cuánto gasté por mes jugando al pádel? · <span style="color:#f59e0b">Datawrapper</span></h2>
       <div class="embed">
-        <!-- TAL CUAL ME LO PASASTE -->
         <iframe title="Cuanto gasté jugando al Pádel por mes?" aria-label="Column Chart" id="datawrapper-chart-v1fgM" src="https://datawrapper.dwcdn.net/v1fgM/3/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="426" data-external="1"></iframe>
         <script type="text/javascript">!function(){"use strict";window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}})}();</script>
       </div>
@@ -113,7 +112,6 @@
     <section id="tableau" class="viz-card">
       <h2>¿En qué días y horarios gasto más? · <span style="color:#7c9cff">Tableau</span></h2>
       <div class="embed">
-        <!-- TAL CUAL ME LO PASASTE -->
         <div class='tableauPlaceholder' id='viz1758406928844' style='position: relative'>
           <noscript><a href='#'><img alt='Análisis de gastos personales ' src='https://public.tableau.com/static/images/ZF/ZFZ39WRJ4/1_rss.png' style='border: none' /></a></noscript>
           <object class='tableauViz'  style='display:none;'>
@@ -144,13 +142,5 @@
 
     <footer>Hecho con ♥ para Infovis — RAWGraphs · Flourish · Datawrapper · Tableau</footer>
   </div>
-
-  <script>
-    // Guardá la intro localmente (editable)
-    const intro = document.getElementById('intro');
-    const INTRO_KEY = 'infovis_intro_text';
-    intro.addEventListener('input', ()=> localStorage.setItem(INTRO_KEY, intro.innerHTML));
-    const saved = localStorage.getItem(INTRO_KEY); if(saved) intro.innerHTML = saved;
-  </script>
 </body>
 </html>
