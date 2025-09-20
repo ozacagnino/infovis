@@ -38,7 +38,7 @@
       border:1px solid #243161; border-radius: 14px;
       background: #0e1530aa;
     }
-    /* NAV como pestañas */
+
     .nav{
       display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin: 10px 0 24px;
     }
@@ -62,7 +62,7 @@
     .embed > *{ width:100%; display:block; border:0; }
     .flourish-embed{ width:100%; }
 
-    /* Pestañas: ocultar/mostrar panels */
+
     .tab-panel{ display:none; }
     .tab-panel.active{ display:block; }
 
@@ -143,7 +143,7 @@
     <footer>Hecho con ♥ para Infovis — RAWGraphs · Flourish · Datawrapper · Tableau</footer>
   </div>
 
-  <!-- Script de pestañas (solo esto) -->
+
   <script>
     (function(){
       const tabs = Array.from(document.querySelectorAll('#tab-nav a'));
@@ -154,7 +154,7 @@
         tabs.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
       }
 
-      // click en botones
+
       tabs.forEach(a => a.addEventListener('click', e => {
         e.preventDefault();
         const id = a.getAttribute('href').slice(1);
@@ -163,13 +163,13 @@
         window.scrollTo({top:0, behavior:'smooth'});
       }));
 
-      // estado inicial: hash o primera pestaña
+
       const initial = location.hash ? location.hash.slice(1) : (tabs[0]?.getAttribute('href').slice(1));
       showTab(initial || 'rawgraphs');
     })();
   </script>
 
-  <!-- Script de Tableau tal cual lo tenías -->
+
   <script type='text/javascript'>
     var divElement = document.getElementById('viz1758406928844');
     var vizElement = divElement.getElementsByTagName('object')[0];
