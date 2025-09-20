@@ -97,14 +97,6 @@
     footer{
       color:#8fa1cd; text-align:center; margin: 24px 0 40px; font-size: 13px;
     }
-      /* === Fix RAWGraphs fit (SVG dentro del panel, sin recortes) === */
-  .embed.svg-raw{ overflow:hidden; padding: 0; }            /* respeta los bordes redondeados del panel */
-  .embed.svg-raw object{ display:block; width:100%; height:auto; border:0; }  /* escala por ancho */
-  @media (min-width: 840px){
-    .embed.svg-raw object{ max-height:72vh; }               /* que no se pase de alto en desktop */
-  }
-  /* IMPORTANTE: quitamos la clase .ratio SOLO para RAWGraphs */
-
   </style>
 </head>
 <body>
@@ -150,7 +142,7 @@
       <h2>¿Cuánto gasté por mes jugando al pádel? <span style="color:#f59e0b">· Datawrapper</span></h2>
       <div class="embed">
         <!-- Datawrapper embed -->
-        <iframe title="Cuanto gasté jugando al Pádel por mes?" aria-label="Column Chart" id="datawrapper-chart-v1fgM" src="https://datawrapper.dwcdn.net/v1fgM/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="426" data-external="1"></iframe>
+        <iframe title="Cuanto gasté jugando al Pádel por mes?" aria-label="Column Chart" id="datawrapper-chart-v1fgM" src="https://datawrapper.dwcdn.net/v1fgM/2/?transparent=1" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="426" data-external="1"></iframe>
         <script type="text/javascript">
           !function(){ "use strict";
             window.addEventListener("message", function(a){
