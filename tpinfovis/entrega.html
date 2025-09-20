@@ -38,24 +38,33 @@
       border:1px solid #243161; border-radius: 14px;
       background: #0e1530aa;
     }
+    /* NAV como pestañas */
     .nav{
       display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin: 10px 0 24px;
     }
     .nav a{
-      text-decoration:none; color:var(--ink); border:1px solid #2a376a; padding:8px 12px; border-radius:999px;
+      text-decoration:none; color:var(--ink); border:1px solid #2a376a; padding:8px 14px; border-radius:999px;
       background: linear-gradient(180deg,#18234b,#121a38);
-      font-weight:600;
+      font-weight:600; transition:.2s;
     }
+    .nav a:hover{ transform: translateY(-1px); border-color:#41539c }
+    .nav a.active{
+      background: linear-gradient(180deg,#2943a0,#1b2f78);
+      border-color:#5f7df5; box-shadow: 0 6px 20px rgba(120,150,255,.25), inset 0 0 0 1px #7c9cff;
+    }
+
     .viz-card{
       background: var(--panel); border:1px solid #243161; border-radius: 16px;
       padding: 14px; margin: 18px 0 28px; box-shadow: 0 10px 30px rgba(0,0,0,.25);
     }
     .viz-card h2{ margin: 4px 6px 12px; font-size: clamp(18px,2.5vw,26px) }
     .embed{ border-radius: 14px; overflow: hidden; background:#0b122b; border:1px solid #243161; }
-
-    /* Ancho fluido para todos los embeds */
     .embed > *{ width:100%; display:block; border:0; }
     .flourish-embed{ width:100%; }
+
+    /* Pestañas: ocultar/mostrar panels */
+    .tab-panel{ display:none; }
+    .tab-panel.active{ display:block; }
 
     footer{ color:#8fa1cd; text-align:center; margin: 20px 0 40px; font-size: 13px; }
   </style>
@@ -67,13 +76,12 @@
       <p class="subtitle">Cuatro visualizaciones para entender en qué, cuándo y cómo se movió mi plata. Deslizá y explorá.</p>
     </header>
 
-    <!-- Descripción fija (editá este texto en el HTML si querés cambiarlo) -->
     <div class="intro">
       Esta página resume mis gastos personales del último año con cuatro visualizaciones interactivas.
       Mirá la distribución por categorías, la evolución mensual del pádel y los patrones por días y horarios.
     </div>
 
-    <nav class="nav">
+    <nav class="nav" id="tab-nav">
       <a href="#rawgraphs">RAWGraphs</a>
       <a href="#flourish">Flourish</a>
       <a href="#datawrapper">Datawrapper</a>
@@ -81,7 +89,7 @@
     </nav>
 
     <!-- RAWGRAPHS -->
-    <section id="rawgraphs" class="viz-card">
+    <section id="rawgraphs" class="viz-card tab-panel">
       <h2>¿En qué “destinos” se me va realmente la plata? · <span style="color:#7c9cff">RAWGraphs</span></h2>
       <div class="embed">
         <object data="1tp.svg" type="image/svg+xml"></object>
@@ -89,7 +97,7 @@
     </section>
 
     <!-- FLOURISH -->
-    <section id="flourish" class="viz-card">
+    <section id="flourish" class="viz-card tab-panel">
       <h2>¿Qué categoría lideró mis gastos mes a mes? · <span style="color:#6ee7b7">Flourish</span></h2>
       <div class="embed">
         <div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/25233000">
@@ -100,16 +108,16 @@
     </section>
 
     <!-- DATAWRAPPER -->
-    <section id="datawrapper" class="viz-card">
+    <section id="datawrapper" class="viz-card tab-panel">
       <h2>¿Cuánto gasté por mes jugando al pádel? · <span style="color:#f59e0b">Datawrapper</span></h2>
       <div class="embed">
         <iframe title="Cuanto gasté jugando al Pádel por mes?" aria-label="Column Chart" id="datawrapper-chart-v1fgM" src="https://datawrapper.dwcdn.net/v1fgM/3/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="426" data-external="1"></iframe>
-        <script type="text/javascript"> </script>
+        <script type="text/javascript">!function(){"use strict";window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}})}();</script>
       </div>
     </section>
 
     <!-- TABLEAU -->
-    <section id="tableau" class="viz-card">
+    <section id="tableau" class="viz-card tab-panel">
       <h2>¿En qué días y horarios gasto más? · <span style="color:#7c9cff">Tableau</span></h2>
       <div class="embed">
         <div class='tableauPlaceholder' id='viz1758406928844' style='position: relative'>
@@ -131,16 +139,44 @@
         </div>
       </div>
     </section>
-    <script type='text/javascript'>
-          var divElement = document.getElementById('viz1758406928844');
-          var vizElement = divElement.getElementsByTagName('object')[0];
-          vizElement.style.width='1016px';vizElement.style.height='991px';
-          var scriptElement = document.createElement('script');
-          scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-          vizElement.parentNode.insertBefore(scriptElement, vizElement);
-        </script>
 
     <footer>Hecho con ♥ para Infovis — RAWGraphs · Flourish · Datawrapper · Tableau</footer>
   </div>
+
+  <!-- Script de pestañas (solo esto) -->
+  <script>
+    (function(){
+      const tabs = Array.from(document.querySelectorAll('#tab-nav a'));
+      const panels = Array.from(document.querySelectorAll('.tab-panel'));
+
+      function showTab(id){
+        panels.forEach(p => p.classList.toggle('active', p.id === id));
+        tabs.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+      }
+
+      // click en botones
+      tabs.forEach(a => a.addEventListener('click', e => {
+        e.preventDefault();
+        const id = a.getAttribute('href').slice(1);
+        showTab(id);
+        history.replaceState(null, '', '#' + id);
+        window.scrollTo({top:0, behavior:'smooth'});
+      }));
+
+      // estado inicial: hash o primera pestaña
+      const initial = location.hash ? location.hash.slice(1) : (tabs[0]?.getAttribute('href').slice(1));
+      showTab(initial || 'rawgraphs');
+    })();
+  </script>
+
+  <!-- Script de Tableau tal cual lo tenías -->
+  <script type='text/javascript'>
+    var divElement = document.getElementById('viz1758406928844');
+    var vizElement = divElement.getElementsByTagName('object')[0];
+    vizElement.style.width='1016px';vizElement.style.height='991px';
+    var scriptElement = document.createElement('script');
+    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+    vizElement.parentNode.insertBefore(scriptElement, vizElement);
+  </script>
 </body>
 </html>
