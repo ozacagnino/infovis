@@ -97,6 +97,14 @@
     footer{
       color:#8fa1cd; text-align:center; margin: 24px 0 40px; font-size: 13px;
     }
+      /* === Fix RAWGraphs fit (SVG dentro del panel, sin recortes) === */
+  .embed.svg-raw{ overflow:hidden; padding: 0; }            /* respeta los bordes redondeados del panel */
+  .embed.svg-raw object{ display:block; width:100%; height:auto; border:0; }  /* escala por ancho */
+  @media (min-width: 840px){
+    .embed.svg-raw object{ max-height:72vh; }               /* que no se pase de alto en desktop */
+  }
+  /* IMPORTANTE: quitamos la clase .ratio SOLO para RAWGraphs */
+
   </style>
 </head>
 <body>
@@ -113,15 +121,15 @@
       </nav>
     </header>
 
-    <!-- RAWGRAPHS -->
-    <section class="panel active" id="tab-raw" role="tabpanel" aria-labelledby="btn-raw">
-      <h2>¿En qué “destinos” se me va realmente la plata? <span style="color:#7c9cff">· RAWGraphs</span></h2>
-      <p class="hint">Asegurate de tener <code>1tp.svg</code> en la misma carpeta que este HTML. El SVG es escalable y conserva tooltips/etiquetas si los exportaste.</p>
-      <div class="embed ratio">
-        <!-- RAWGRAPHS embed -->
-        <object data="1tp.svg" type="image/svg+xml"></object>
-      </div>
-    </section>
+     <!-- RAWGRAPHS -->
+  <section class="panel active" id="tab-raw" role="tabpanel" aria-labelledby="btn-raw">
+    <h2>¿En qué “destinos” se me va realmente la plata? <span style="color:#7c9cff">· RAWGraphs</span></h2>
+    <p class="hint">Dejá <code>1tp.svg</code> en la misma carpeta que este HTML. El SVG escalará al ancho del panel.</p>
+    <div class="embed svg-raw">
+      <!-- Si preferís, podés cambiar <object> por <img src="1tp.svg" class="raw-svg"> y también escala perfecto. -->
+      <object data="1tp.svg" type="image/svg+xml"></object>
+    </div>
+  </section>
 
     <!-- FLOURISH -->
     <section class="panel" id="tab-flourish" role="tabpanel" aria-labelledby="btn-flourish">
