@@ -145,4 +145,78 @@
       <h2>¿En qué días y horarios gasto más? <span style="color:#7c9cff">· Tableau</span></h2>
       <div class="embed">
         <div class='tableauPlaceholder' id='viz1758406928844' style='position: relative'>
-          <noscript><a href='#'><img alt='Análisis de gastos personales ' src='https://public.tableau.com/static/images/ZF/ZFZ39WRJ4/1_rss.png' style_
+          <noscript><a href='#'><img alt='Análisis de gastos personales ' src='https://public.tableau.com/static/images/ZF/ZFZ39WRJ4/1_rss.png' style='border: none' /></a></noscript>
+          <object class='tableauViz' style='display:none;'>
+            <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+            <param name='embed_code_version' value='3' />
+            <param name='path' value='shared/ZFZ39WRJ4' />
+            <param name='toolbar' value='yes' />
+            <param name='static_image' value='https://public.tableau.com/static/images/ZF/ZFZ39WRJ4/1.png' />
+            <param name='animate_transition' value='yes' />
+            <param name='display_static_image' value='yes' />
+            <param name='display_spinner' value='yes' />
+            <param name='display_overlay' value='yes' />
+            <param name='display_count' value='yes' />
+            <param name='language' value='es-ES' />
+            <param name='filter' value='publish=yes' />
+          </object>
+        </div>
+        <script type='text/javascript'>
+          (function(){
+            var divElement = document.getElementById('viz1758406928844');
+            var vizElement = divElement.getElementsByTagName('object')[0];
+            vizElement.style.width = '100%'; // ancho pleno
+            // la altura la setea fitTableau() para que no haya scroll
+            var scriptElement = document.createElement('script');
+            scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+            vizElement.parentNode.insertBefore(scriptElement, vizElement);
+          })();
+        </script>
+      </div>
+    </section>
+
+    <footer>Hecho con ♥ para Infovis — RAWGraphs · Flourish · Datawrapper · Tableau</footer>
+  </div>
+
+  <script>
+    // Tabs
+    const tabs = [...document.querySelectorAll('.tab-btn')];
+    const panels = [...document.querySelectorAll('.panel')];
+    tabs.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        tabs.forEach(b=>b.setAttribute('aria-selected','false'));
+        panels.forEach(p=>p.classList.remove('active'));
+        btn.setAttribute('aria-selected','true');
+        const panelId = btn.getAttribute('aria-controls');
+        document.getElementById(panelId).classList.add('active');
+        window.scrollTo({top:0, behavior:'smooth'});
+        if(panelId === 'tab-tableau') fitTableau(); // ajustar al entrar
+      });
+    });
+
+    // Intro editable persistente
+    const intro = document.getElementById('intro');
+    const INTRO_KEY = 'infovis_intro_text';
+    intro.addEventListener('input', ()=> localStorage.setItem(INTRO_KEY, intro.innerHTML));
+    const saved = localStorage.getItem(INTRO_KEY);
+    if(saved) intro.innerHTML = saved;
+
+    // === Ajuste de altura para que Tableau entre entero sin scroll ===
+    function fitTableau(){
+      const hero = document.querySelector('.hero');
+      const tabsBar = document.querySelector('.tabs');
+      const panel = document.getElementById('tab-tableau');
+      const title = panel.querySelector('h2');
+      const placeholder = document.getElementById('viz1758406928844');
+      const obj = placeholder ? placeholder.getElementsByTagName('object')[0] : null;
+      if(!obj) return;
+      // espacio disponible en viewport menos header + tabs + título + márgenes internos
+      const used = (hero?.offsetHeight||0) + (tabsBar?.offsetHeight||0) + (title?.offsetHeight||0) + 48 /*padding/márgenes*/;
+      const target = Math.max(420, window.innerHeight - used);
+      obj.style.height = target + 'px';
+    }
+    window.addEventListener('load', fitTableau);
+    window.addEventListener('resize', fitTableau);
+  </script>
+</body>
+</html>
