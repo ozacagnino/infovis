@@ -60,13 +60,17 @@
     .embed > *{ width:100%; display:block; border:0; }
     .flourish-embed{ width:100%; }
 
-    /* Pestañas */
+    /* Tabs */
     .tab-panel{ display:none; }
     .tab-panel.active{ display:block; }
 
-    /* Asegurar buen alto mínimo al contenedor de Tableau */
-    .embed .tableauPlaceholder{ min-height: 720px; }
-    @media (max-width: 800px){ .embed .tableauPlaceholder{ min-height: 560px; } }
+    /* Tableau responsive */
+    .embed .tableauPlaceholder,
+    .embed .tableauPlaceholder object{
+      width:100% !important;
+      height:80vh !important;   /* ocupa 80% del alto de la ventana */
+      min-height:640px;         /* nunca menos que 640px */
+    }
 
     footer{ color:#8fa1cd; text-align:center; margin: 20px 0 40px; font-size: 13px; }
   </style>
@@ -118,7 +122,7 @@
       </div>
     </section>
 
-    <!-- TABLEAU (ajustado) -->
+    <!-- TABLEAU -->
     <section id="tableau" class="viz-card tab-panel">
       <h2>¿En qué días y horarios gasto más? · <span style="color:#7c9cff">Tableau</span></h2>
       <div class="embed">
@@ -141,22 +145,13 @@
             <param name='filter' value='publish=yes' />
           </object>
         </div>
-        <script type='text/javascript'>
-          var divElement = document.getElementById('viz1758555182985');
-          var vizElement = divElement.getElementsByTagName('object')[0];
-          // Ancho fluido y alto que llena el recuadro
-          vizElement.style.width='100%';
-          vizElement.style.height='85vh';
-          var scriptElement = document.createElement('script');
-          scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-          vizElement.parentNode.insertBefore(scriptElement, vizElement);
-        </script>
       </div>
     </section>
 
     <footer>Visualización de la Información — Octavio Zacagnino — RAWGraphs · Flourish · Datawrapper · Tableau</footer>
   </div>
 
+  <!-- Tabs -->
   <script>
     (function(){
       const tabs = Array.from(document.querySelectorAll('#tab-nav a'));
@@ -175,6 +170,21 @@
       const initial = location.hash ? location.hash.slice(1) : (tabs[0]?.getAttribute('href').slice(1));
       showTab(initial || 'rawgraphs');
     })();
+  </script>
+
+  <!-- Cargar una sola vez la API de Tableau y ajustar tamaño -->
+  <script src="https://public.tableau.com/javascripts/api/viz_v1.js"></script>
+  <script>
+    function sizeTableau(){
+      var ph = document.getElementById('viz1758555182985');
+      if(!ph) return;
+      var obj = ph.getElementsByTagName('object')[0];
+      if(!obj) return;
+      obj.style.width = '100%';
+      obj.style.height = Math.max(640, Math.round(window.innerHeight * 0.80)) + 'px';
+    }
+    window.addEventListener('load', sizeTableau);
+    window.addEventListener('resize', sizeTableau);
   </script>
 </body>
 </html>
