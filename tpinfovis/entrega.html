@@ -38,7 +38,6 @@
       border:1px solid #243161; border-radius: 14px;
       background: #0e1530aa;
     }
-
     .nav{
       display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin: 10px 0 24px;
     }
@@ -52,7 +51,6 @@
       background: linear-gradient(180deg,#2943a0,#1b2f78);
       border-color:#5f7df5; box-shadow: 0 6px 20px rgba(120,150,255,.25), inset 0 0 0 1px #7c9cff;
     }
-
     .viz-card{
       background: var(--panel); border:1px solid #243161; border-radius: 16px;
       padding: 14px; margin: 18px 0 28px; box-shadow: 0 10px 30px rgba(0,0,0,.25);
@@ -62,9 +60,13 @@
     .embed > *{ width:100%; display:block; border:0; }
     .flourish-embed{ width:100%; }
 
-
+    /* Pestañas */
     .tab-panel{ display:none; }
     .tab-panel.active{ display:block; }
+
+    /* Asegurar buen alto mínimo al contenedor de Tableau */
+    .embed .tableauPlaceholder{ min-height: 720px; }
+    @media (max-width: 800px){ .embed .tableauPlaceholder{ min-height: 560px; } }
 
     footer{ color:#8fa1cd; text-align:center; margin: 20px 0 40px; font-size: 13px; }
   </style>
@@ -112,66 +114,57 @@
       <h2>¿Cuánto gasté por mes jugando al pádel? · <span style="color:#f59e0b">Datawrapper</span></h2>
       <div class="embed">
         <iframe title="Cuanto gasté jugando al Pádel por mes?" aria-label="Column Chart" id="datawrapper-chart-v1fgM" src="https://datawrapper.dwcdn.net/v1fgM/3/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="426" data-external="1"></iframe>
-        <script type="text/javascript"> </script>
+        <script type="text/javascript">!function(){"use strict";window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}})}();</script>
       </div>
     </section>
 
-<!-- TABLEAU -->
-<section id="tableau" class="viz-card tab-panel">
-  <h2>¿En qué días y horarios gasto más? · <span style="color:#7c9cff">Tableau</span></h2>
-  <div class="embed">
-    <div class='tableauPlaceholder' id='viz1758555182985' style='position: relative'>
-      <noscript>
-        <a href='#'><img alt='Análisis de gastos personales'
-          src='https://public.tableau.com/static/images/tp/tpinfovis_17584041634440/Anlisisdegastospersonales/1_rss.png'
-          style='border: none' /></a>
-      </noscript>
-      <object class='tableauViz' style='display:none;'>
-        <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
-        <param name='embed_code_version' value='3' />
-        <param name='site_root' value='' />
-        <param name='name' value='tpinfovis_17584041634440/Anlisisdegastospersonales' />
-        <param name='tabs' value='no' />
-        <param name='toolbar' value='yes' />
-        <param name='static_image' value='https://public.tableau.com/static/images/tp/tpinfovis_17584041634440/Anlisisdegastospersonales/1.png' />
-        <param name='animate_transition' value='yes' />
-        <param name='display_static_image' value='yes' />
-        <param name='display_spinner' value='yes' />
-        <param name='display_overlay' value='yes' />
-        <param name='display_count' value='yes' />
-        <param name='language' value='es-ES' />
-        <param name='filter' value='publish=yes' />
-      </object>
-      <script type='text/javascript'>
-        var divElement = document.getElementById('viz1758555182985');
-        var vizElement = divElement.getElementsByTagName('object')[0];
-        vizElement.style.width='1016px';vizElement.style.height='991px';
-        var scriptElement = document.createElement('script');
-        scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-        vizElement.parentNode.insertBefore(scriptElement, vizElement);
-      </script>
-    </div>
-    
-  </div>
-</section>
-
-
+    <!-- TABLEAU (ajustado) -->
+    <section id="tableau" class="viz-card tab-panel">
+      <h2>¿En qué días y horarios gasto más? · <span style="color:#7c9cff">Tableau</span></h2>
+      <div class="embed">
+        <div class='tableauPlaceholder' id='viz1758555182985' style='position: relative'>
+          <noscript><a href='#'><img alt='Análisis de gastos personales' src='https://public.tableau.com/static/images/tp/tpinfovis_17584041634440/Anlisisdegastospersonales/1_rss.png' style='border: none' /></a></noscript>
+          <object class='tableauViz' style='display:none;'>
+            <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+            <param name='embed_code_version' value='3' />
+            <param name='site_root' value='' />
+            <param name='name' value='tpinfovis_17584041634440/Anlisisdegastospersonales' />
+            <param name='tabs' value='no' />
+            <param name='toolbar' value='yes' />
+            <param name='static_image' value='https://public.tableau.com/static/images/tp/tpinfovis_17584041634440/Anlisisdegastospersonales/1.png' />
+            <param name='animate_transition' value='yes' />
+            <param name='display_static_image' value='yes' />
+            <param name='display_spinner' value='yes' />
+            <param name='display_overlay' value='yes' />
+            <param name='display_count' value='yes' />
+            <param name='language' value='es-ES' />
+            <param name='filter' value='publish=yes' />
+          </object>
+        </div>
+        <script type='text/javascript'>
+          var divElement = document.getElementById('viz1758555182985');
+          var vizElement = divElement.getElementsByTagName('object')[0];
+          // Ancho fluido y alto que llena el recuadro
+          vizElement.style.width='100%';
+          vizElement.style.height='85vh';
+          var scriptElement = document.createElement('script');
+          scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+          vizElement.parentNode.insertBefore(scriptElement, vizElement);
+        </script>
+      </div>
+    </section>
 
     <footer>Visualización de la Información — Octavio Zacagnino — RAWGraphs · Flourish · Datawrapper · Tableau</footer>
   </div>
-
 
   <script>
     (function(){
       const tabs = Array.from(document.querySelectorAll('#tab-nav a'));
       const panels = Array.from(document.querySelectorAll('.tab-panel'));
-
       function showTab(id){
         panels.forEach(p => p.classList.toggle('active', p.id === id));
         tabs.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
       }
-
-
       tabs.forEach(a => a.addEventListener('click', e => {
         e.preventDefault();
         const id = a.getAttribute('href').slice(1);
@@ -179,21 +172,9 @@
         history.replaceState(null, '', '#' + id);
         window.scrollTo({top:0, behavior:'smooth'});
       }));
-
-
       const initial = location.hash ? location.hash.slice(1) : (tabs[0]?.getAttribute('href').slice(1));
       showTab(initial || 'rawgraphs');
     })();
-  </script>
-
-
-  <script type='text/javascript'>
-    var divElement = document.getElementById('viz1758406928844');
-    var vizElement = divElement.getElementsByTagName('object')[0];
-    vizElement.style.width='1016px';vizElement.style.height='991px';
-    var scriptElement = document.createElement('script');
-    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-    vizElement.parentNode.insertBefore(scriptElement, vizElement);
   </script>
 </body>
 </html>
